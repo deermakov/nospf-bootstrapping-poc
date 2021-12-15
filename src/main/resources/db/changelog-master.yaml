@@ -1,0 +1,5 @@
+databaseChangeLog:
+- include:
+    file: classpath:/db/changelog/01-create_jpa_objects.yml
+- include:
+    file: classpath:/db/changelog/02-create_peer.yml

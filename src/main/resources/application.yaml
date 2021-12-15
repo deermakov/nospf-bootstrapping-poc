@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: nospf-bootstrapping-poc
+    version: replaceVersion
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  #    url: ${DB_URL}           - задается в TestContainersInitializer
+  #    username: ${DB_USERNAME} - задается в TestContainersInitializer
+  #    password: ${DB_PASSWORD} - задается в TestContainersInitializer
+  jpa:
+    generate-ddl: false  # только ручное создание объектов БД
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+  liquibase:
+    enabled: true
+    change-log: classpath:/db/changelog-master.yaml
+
+# embedded Tomcat
+server:
+  port: 9900
+
+logging:
+  level:
+    org.apache.http: INFO
+    root: info
+
+nospf-bootstrapping-poc:
+  node-info:
+    network-id: QwErAsD
+    node-bucket: 0
+    port: 56789
+  scan-dns-params:
+    domains:
+    - dyndns.net
+    - noip.net
+    first-port: 40000
+    last-port: 65000
+    last-node-bucket: 10000
