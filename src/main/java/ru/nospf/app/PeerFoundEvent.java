@@ -10,4 +10,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class PeerFoundEvent {
     private String fullDnsPeerName;
+    private Integer port;
 }

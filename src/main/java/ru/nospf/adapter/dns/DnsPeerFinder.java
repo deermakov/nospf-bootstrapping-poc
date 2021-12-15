@@ -15,15 +15,21 @@ import java.net.UnknownHostException;
  * todo Document type DnsNameProbe
  */
 @Component
-@RequiredArgsConstructor
 @Slf4j
 public class DnsPeerFinder {
 
     private final ApplicationConfig applicationConfig;
-    private ApplicationEventPublisher applicationEventPublisher;
+    private final ApplicationEventPublisher applicationEventPublisher;
 
-    private Integer nodeBucket = 0;
-    private Integer port = applicationConfig.getScanDnsParams().getFirstPort();
+    private Integer nodeBucket;
+    private Integer port;
+
+    public DnsPeerFinder(ApplicationConfig applicationConfig, ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationConfig = applicationConfig;
+        this.applicationEventPublisher = applicationEventPublisher;
+
+        port = applicationConfig.getScanDnsParams().getFirstPort();
+    }
 
     @Scheduled(fixedRate = 100)
     public void findNextNode() {
@@ -32,9 +38,11 @@ public class DnsPeerFinder {
         String nodeName = NodeNameGenerator.getNodeName(applicationConfig.getNodeInfo().getNetworkId(), nodeBucket, port);
         String fullDnsPeerName = nodeName + "." + applicationConfig.getScanDnsParams().getDomains().get(0);
 
+        log.debug("Checking for existence {}", fullDnsPeerName);
+
         // Проверяем вычисленное имя хоста
         if (isDnsNameExist(fullDnsPeerName)) {
-            applicationEventPublisher.publishEvent(new PeerFoundEvent(fullDnsPeerName));
+            applicationEventPublisher.publishEvent(new PeerFoundEvent(fullDnsPeerName, port));
         }
 
         // Вычисляем значения nodeBucket и port для следующей проверки
@@ -56,8 +64,9 @@ public class DnsPeerFinder {
     // При необходимости проверки других типов записей нужно использовать JNDI DNS provider: Attribute attr = new InitialDirContext().getAttributes("dns:_netblocks.google.com", new String[] {"TXT"}).get("TXT");
     public boolean isDnsNameExist(String fullDnsHostName) {
         try {
-            InetAddress dnsresult[] = InetAddress.getAllByName(fullDnsHostName);
-            return dnsresult.length > 0;
+            InetAddress dnsresult = InetAddress.getByName(fullDnsHostName);
+            String ip = dnsresult.getHostAddress();
+            return ip != null;
         } catch (UnknownHostException e) {
             return false;
         }
