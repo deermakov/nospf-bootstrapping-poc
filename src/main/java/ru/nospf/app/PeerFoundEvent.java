@@ -2,6 +2,7 @@ package ru.nospf.app;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import ru.nospf.domain.Peer;
 
 /**
  * todo Document type PeerFoundEvent
@@ -10,5 +11,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class PeerFoundEvent {
     private String fullDnsPeerName;
-    private Integer port;
+    private Peer peer;
 }

@@ -23,7 +23,8 @@ server:
 
 logging:
   level:
-    root: DEBUG
+    root: INFO
+    ru: DEBUG
 
 nospf-bootstrapping-poc:
   node-info:
@@ -32,8 +33,8 @@ nospf-bootstrapping-poc:
     port: 56789
   scan-dns-params:
     domains:
-    - dyndns.org
+    - duckdns.org
     - mine.nu
-    first-port: 40000
+    first-port: 56780
     last-port: 65000
     last-node-bucket: 10000
