@@ -4,6 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.integration.config.EnableIntegration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -12,6 +14,8 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EntityScan("ru.nospf.domain")
 @EnableTransactionManagement
 @EnableScheduling
+@EnableIntegration
+@IntegrationComponentScan("ru.nospf.intconfig")
 public class Application {
 
     public static void main(String[] args) {

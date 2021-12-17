@@ -1,7 +1,6 @@
-package ru.nospf.fw.config;
+package ru.nospf.fw.appconfig;
 
 import lombok.Data;
-import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 

@@ -6,7 +6,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.nospf.app.PeerFoundEvent;
 import ru.nospf.domain.Peer;
-import ru.nospf.fw.config.ApplicationConfig;
+import ru.nospf.fw.appconfig.ApplicationConfig;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
