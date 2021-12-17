@@ -1,44 +1,53 @@
 package ru.nospf.fw.intconfig;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Lookup;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.integration.annotation.IntegrationComponentScan;
+import org.springframework.context.annotation.Scope;
 import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.annotation.Transformer;
-import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.ip.tcp.TcpOutboundGateway;
 import org.springframework.integration.ip.tcp.connection.AbstractClientConnectionFactory;
 import org.springframework.integration.ip.tcp.connection.TcpNetClientConnectionFactory;
 import org.springframework.messaging.MessageHandler;
 
 @Configuration
+@RequiredArgsConstructor
 public class OutboundIntegrationConfig {
 
-    //@Value(${some.port})
-    private int port = 12345;
+    private final String ip = "localhost";
+    private final int port = 56789;
 
     @MessagingGateway(defaultRequestChannel = "toTcp")
     public interface ToTcpGateway {
-        String toTcp(String in);
+        String send(String request);
+    }
+
+    @Lookup
+    public AbstractClientConnectionFactory lookupConnectionFactory() {
+        return null;
     }
 
     @Bean
     @ServiceActivator(inputChannel = "toTcp")
-    public MessageHandler tcpOutGate(AbstractClientConnectionFactory connectionFactory) {
+    public MessageHandler tcpOutGate() {
         TcpOutboundGateway gate = new TcpOutboundGateway();
-        gate.setConnectionFactory(connectionFactory);
-        gate.setOutputChannelName("resultToString");
+        gate.setConnectionFactory(lookupConnectionFactory());
+        gate.setOutputChannelName("peerResponse");
         return gate;
     }
 
-    @Transformer(inputChannel="resultToString")
+    @Transformer(inputChannel = "peerResponse")
     public String convertResult(byte[] bytes) {
         return new String(bytes);
     }
 
     @Bean
+    @Scope(value = ConfigurableBeanFactory.SCOPE_PROTOTYPE)
     public AbstractClientConnectionFactory clientCF() {
-        return new TcpNetClientConnectionFactory("localhost", this.port);
+        return new TcpNetClientConnectionFactory(this.ip, this.port);
     }
 }

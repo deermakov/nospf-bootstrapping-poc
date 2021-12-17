@@ -13,11 +13,11 @@ import ru.nospf.fw.intconfig.OutboundIntegrationConfig;
 @Slf4j
 public class OutboundAdapter {
 
-    private final OutboundIntegrationConfig.ToTcpGateway gateway;
+    public final OutboundIntegrationConfig.ToTcpGateway gateway;
 
-    public void send(String s) {
-        log.debug("Sending request: {}", s);
-        String ss = gateway.toTcp(s);
-        log.debug("Received response: {}", ss);
+    public void send(String request) {
+        log.debug("Sending request: {}", request);
+        String response = gateway.send(request);
+        log.debug("Received response: {}", response);
     }
 }
