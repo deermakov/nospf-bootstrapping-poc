@@ -34,6 +34,6 @@ public class PeerRegistrator {
     public void onPeerFoundEvent(PeerFoundEvent event) {
         log.info("Registering peer: {}", event);
 
-        outboundAdapter.send("TcP mEsSaGe");
+        outboundAdapter.send("TcP mEsSaGe", event.getPeer());
     }
 }
