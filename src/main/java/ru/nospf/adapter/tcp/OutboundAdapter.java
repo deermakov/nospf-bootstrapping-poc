@@ -6,8 +6,6 @@ import org.springframework.stereotype.Component;
 import ru.nospf.domain.Peer;
 import ru.nospf.fw.intconfig.OutboundIntegrationConfig;
 
-import java.net.ConnectException;
-
 /**
  * todo Document type OutboundAdapter
  */
@@ -21,9 +19,9 @@ public class OutboundAdapter {
     public void send(String request, Peer peer) {
         log.debug("Sending request: {}", request);
         try {
-            String response = gateway.send(request, peer.getIp(), peer.getPort());
+            String response = gateway.send(request, /*peer.getIp()*/"localhost", peer.getPort());
             log.debug("Received response: {}", response);
-        } catch (Exception e){
+        } catch (Exception e) {
             log.error("Peer connect exception", e);
         }
     }
