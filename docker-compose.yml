@@ -4,6 +4,3 @@ services:
         image: docker.io/library/nospf-bootstrapping-poc:0.0.1-SNAPSHOT
         ports:
             - "56789:56789"
-        dns:
-            - 8.8.8.8
-            - 4.4.4.4
