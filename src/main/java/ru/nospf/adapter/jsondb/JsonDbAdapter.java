@@ -15,17 +15,15 @@ public class JsonDbAdapter implements Database {
     private final JsonDBTemplate jsonDBTemplate;
 
     @Override
-    public void save(Peer peer){
-        if (!jsonDBTemplate.collectionExists(Peer.class)){
+    public void save(Peer peer) {
+        if (!jsonDBTemplate.collectionExists(Peer.class)) {
             jsonDBTemplate.createCollection(Peer.class);
         }
 
-        if (jsonDBTemplate.findById(peer.getIp(), Peer.class) != null){
+        if (jsonDBTemplate.findById(peer.getIp(), Peer.class) != null) {
             jsonDBTemplate.save(peer, Peer.class);
         } else {
             jsonDBTemplate.insert(peer);
         }
-
-
     }
 }

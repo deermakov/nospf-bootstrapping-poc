@@ -35,7 +35,9 @@ public class PeerRegistrator {
     public void onPeerFoundEvent(PeerFoundEvent event) {
         log.info("Registering peer: {}", event);
 
-        storage.save(event.getPeer());
         outboundAdapter.send("TcP mEsSaGe", event.getPeer());
+
+        // Сохраняем в БД только после успешного получения ответа (без exception) от пира
+        storage.save(event.getPeer());
     }
 }

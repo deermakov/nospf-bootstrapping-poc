@@ -16,13 +16,10 @@ public class OutboundAdapter {
 
     public final OutboundIntegrationConfig.ToTcpGateway gateway;
 
-    public void send(String request, Peer peer) {
+    public String send(String request, Peer peer) {
         log.debug("Sending request: {}", request);
-        try {
-            String response = gateway.send(request, peer.getIp(), peer.getPort());
-            log.debug("Received response: {}", response);
-        } catch (Exception e) {
-            log.error("Peer connect exception", e);
-        }
+        String response = gateway.send(request, peer.getIp(), peer.getPort());
+        log.debug("Received response: {}", response);
+        return response;
     }
 }

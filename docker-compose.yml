@@ -2,5 +2,7 @@ version: "3.5"
 services:
     nospf-bootstrapping-poc:
         image: docker.io/library/nospf-bootstrapping-poc:0.0.1-SNAPSHOT
+        volumes:
+            - ./storage:/nospf/storage
         ports:
             - "56789:56789"

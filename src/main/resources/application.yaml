@@ -13,7 +13,7 @@ logging:
     ru: DEBUG
 
 jsondb:
-  dbFilesLocation: c:/nospf/storage
+  dbFilesLocation: /nospf/storage
 
 nospf-bootstrapping-poc:
   node-info:

@@ -2,16 +2,15 @@ package ru.nospf.domain;
 
 import io.jsondb.annotation.Document;
 import io.jsondb.annotation.Id;
-import lombok.*;
-
-import java.util.UUID;
+import lombok.Builder;
+import lombok.Data;
 
 /**
  * todo Document type Peer
  */
 @Data
 @Builder
-@Document(collection = "peers", schemaVersion= "1.0")
+@Document(collection = "peers", schemaVersion = "1.0")
 public class Peer {
 
     @Id
