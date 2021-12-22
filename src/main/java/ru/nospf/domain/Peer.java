@@ -1,9 +1,8 @@
 package ru.nospf.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import io.jsondb.annotation.Document;
+import io.jsondb.annotation.Id;
+import lombok.*;
 
 import java.util.UUID;
 
@@ -11,12 +10,11 @@ import java.util.UUID;
  * todo Document type Peer
  */
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
+@Document(collection = "peers", schemaVersion= "1.0")
 public class Peer {
-    private UUID uuid;
 
+    @Id
     private String ip;
     private Integer port;
     private boolean malicious;

@@ -21,6 +21,7 @@ public class PeerRegistrator {
     private final ApplicationConfig applicationConfig;
 
     private final OutboundAdapter outboundAdapter;
+    private final Database storage;
 
     @PostConstruct
     public void logSelfInfo() {
@@ -34,6 +35,7 @@ public class PeerRegistrator {
     public void onPeerFoundEvent(PeerFoundEvent event) {
         log.info("Registering peer: {}", event);
 
+        storage.save(event.getPeer());
         outboundAdapter.send("TcP mEsSaGe", event.getPeer());
     }
 }

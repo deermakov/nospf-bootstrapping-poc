@@ -28,6 +28,13 @@
             <artifactId>lombok</artifactId>
         </dependency>
 
+        <!-- Database -->
+        <dependency>
+            <groupId>io.jsondb</groupId>
+            <artifactId>jsondb-core</artifactId>
+            <version>1.0.115-j11</version>
+        </dependency>
+
         <!-- Networking -->
         <!--dependency>
             <groupId>org.springframework.boot</groupId>
