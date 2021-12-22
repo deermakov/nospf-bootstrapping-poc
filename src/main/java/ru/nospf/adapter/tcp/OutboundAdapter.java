@@ -16,10 +16,10 @@ public class OutboundAdapter {
 
     public final OutboundIntegrationConfig.ToTcpGateway gateway;
 
-    public String send(String request, Peer peer) {
-        log.debug("Sending request: {}", request);
-        String response = gateway.send(request, peer.getIp(), peer.getPort());
-        log.debug("Received response: {}", response);
-        return response;
+    public String handshake(Peer peer) {
+        log.debug("Sending handshake request");
+        String peerPublicKey = gateway.send("", MessageType.HANDSHAKE, peer.getIp(), peer.getPort());
+        log.debug("Received handshake response: peerPublicKey = {}", peerPublicKey);
+        return peerPublicKey;
     }
 }

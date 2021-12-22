@@ -20,6 +20,7 @@ nospf-bootstrapping-poc:
     network-id: QwErAsD
     node-bucket: 0
     port: 56789
+    publicKey: publicKeyA
   scan-dns-params:
     domains:
     - duckdns.org

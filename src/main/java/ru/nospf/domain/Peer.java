@@ -14,6 +14,8 @@ import lombok.Data;
 public class Peer {
 
     @Id
+    private String publicKey;
+
     private String ip;
     private Integer port;
     private boolean malicious;

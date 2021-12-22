@@ -20,10 +20,6 @@ public class JsonDbAdapter implements Database {
             jsonDBTemplate.createCollection(Peer.class);
         }
 
-        if (jsonDBTemplate.findById(peer.getIp(), Peer.class) != null) {
-            jsonDBTemplate.save(peer, Peer.class);
-        } else {
-            jsonDBTemplate.insert(peer);
-        }
+        jsonDBTemplate.upsert(peer);
     }
 }

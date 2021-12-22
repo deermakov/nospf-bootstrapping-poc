@@ -12,6 +12,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
+import ru.nospf.adapter.tcp.MessageType;
 
 @Configuration
 @RequiredArgsConstructor
@@ -19,7 +20,10 @@ public class OutboundIntegrationConfig {
 
     @MessagingGateway(defaultRequestChannel = "toTcp")
     public interface ToTcpGateway {
-        String send(@Payload String request, @Header("host") String host, @Header("port") int port);
+        String send(@Payload String request,
+                    @Header("messageType") MessageType messageType,
+                    @Header("host") String host,
+                    @Header("port") int port);
     }
 
     @Bean
@@ -44,7 +48,7 @@ public class OutboundIntegrationConfig {
                 }
             }
         };
-        gate.setConnectionFactory(new TcpNetClientConnectionFactory("aaa", 11111));// 11111 - неиспользуемый порт, нужен только для первоначальной инициализации
+        gate.setConnectionFactory(new TcpNetClientConnectionFactory("aaa", 11111));// aaa:11111 - неиспользуемый адрес, нужен только для первоначальной инициализации
         gate.setOutputChannelName("peerResponse");
         return gate;
     }

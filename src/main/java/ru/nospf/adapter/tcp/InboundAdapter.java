@@ -14,9 +14,9 @@ import java.text.MessageFormat;
 public class InboundAdapter {
 
     @ServiceActivator(inputChannel = "input")
-    public String receive(String in) {
-        log.debug("Received request: {}", in);
-        String response = MessageFormat.format("''{0}'' acknowledged", in);
+    public String receive(String request) {
+        log.debug("Received request: {}", request);
+        String response = MessageFormat.format("''{0}'' acknowledged", request);
         log.debug("Sending response: {}", response);
         return response; // as we're "gateway", we have to return anything to sender
     }

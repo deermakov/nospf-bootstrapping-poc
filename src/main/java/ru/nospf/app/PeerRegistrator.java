@@ -6,6 +6,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import ru.nospf.adapter.dns.PeerNameGenerator;
 import ru.nospf.adapter.tcp.OutboundAdapter;
+import ru.nospf.domain.Peer;
 import ru.nospf.fw.appconfig.ApplicationConfig;
 
 import javax.annotation.PostConstruct;
@@ -33,9 +34,11 @@ public class PeerRegistrator {
 
     @EventListener
     public void onPeerFoundEvent(PeerFoundEvent event) {
-        log.info("Registering peer: {}", event);
+        log.info("Peer found, trying to communicate: {}", event);
 
-        outboundAdapter.send("TcP mEsSaGe", event.getPeer());
+        Peer peer = event.getPeer();
+        String peerPublicKey = outboundAdapter.handshake(event.getPeer());
+        peer.setPublicKey(peerPublicKey);
 
         // Сохраняем в БД только после успешного получения ответа (без exception) от пира
         storage.save(event.getPeer());

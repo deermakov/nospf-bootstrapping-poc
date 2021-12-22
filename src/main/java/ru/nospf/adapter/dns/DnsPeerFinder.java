@@ -44,7 +44,7 @@ public class DnsPeerFinder {
         log.debug("Checking for existence: networkId = {}, domain = {}, nodeBucket = {}, port = {}", networkId, domain, nodeBucket, port);
 
         // Проверяем вычисленное имя хоста
-        String ip = getPeerIp(fullDnsPeerName);
+        String ip = searchForPeerIp(fullDnsPeerName);
         if (ip != null) {
             Peer peer = Peer.builder().ip(ip).port(port).build();
             applicationEventPublisher.publishEvent(new PeerFoundEvent(fullDnsPeerName, peer));
@@ -67,7 +67,7 @@ public class DnsPeerFinder {
 
     // Проверяем наличие A и AAAA записей DNS.
     // При необходимости проверки других типов записей нужно использовать JNDI DNS provider: Attribute attr = new InitialDirContext().getAttributes("dns:_netblocks.google.com", new String[] {"TXT"}).get("TXT");
-    public String getPeerIp(String fullDnsHostName) {
+    public String searchForPeerIp(String fullDnsHostName) {
         try {
             InetAddress dnsresult = InetAddress.getByName(fullDnsHostName);
             String ip = dnsresult.getHostAddress();
