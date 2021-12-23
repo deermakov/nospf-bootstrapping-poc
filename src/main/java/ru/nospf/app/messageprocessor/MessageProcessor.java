@@ -1,7 +1,5 @@
 package ru.nospf.app.messageprocessor;
 
-import ru.nospf.domain.MessageType;
-
 /**
  * todo Document type MessageProcessor
  */

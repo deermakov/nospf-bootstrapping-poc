@@ -26,7 +26,7 @@ public class InboundIntegrationConfig {
 
     @Bean
     public AbstractServerConnectionFactory serverCF(MapJsonSerializer mapJsonSerializer,
-                                                    MessageConvertingTcpMessageMapper messageConvertingTcpMessageMapper) {
+        MessageConvertingTcpMessageMapper messageConvertingTcpMessageMapper) {
         AbstractServerConnectionFactory result = new TcpNetServerConnectionFactory(applicationConfig.getNodeInfo().getPort());
         result.setSerializer(mapJsonSerializer);
         result.setDeserializer(mapJsonSerializer);

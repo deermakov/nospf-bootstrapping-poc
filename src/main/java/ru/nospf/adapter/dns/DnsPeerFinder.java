@@ -25,7 +25,7 @@ public class DnsPeerFinder {
     private Integer port;
 
     public DnsPeerFinder(ApplicationConfig applicationConfig,
-                         PeerRegistrator peerRegistrator) {
+        PeerRegistrator peerRegistrator) {
         this.applicationConfig = applicationConfig;
         this.peerRegistrator = peerRegistrator;
 

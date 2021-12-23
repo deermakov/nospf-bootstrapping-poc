@@ -14,7 +14,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MessageProcessorGateway {
     private final Map<String, MessageProcessor> messageProcessors;
-    public String process(MessageType messageType, String messagePayload){
+
+    public String process(MessageType messageType, String messagePayload) {
         MessageProcessor messageProcessor = messageProcessors.get(messageType.toString());
         return Optional.ofNullable(messageProcessor).map(messageProcessor1 -> messageProcessor1.process(messagePayload)).orElse(null);
     }
