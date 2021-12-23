@@ -4,8 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
-import ru.nospf.adapter.dns.PeerNameGenerator;
-import ru.nospf.adapter.tcp.OutboundAdapter;
 import ru.nospf.domain.Peer;
 import ru.nospf.fw.appconfig.ApplicationConfig;
 
@@ -38,9 +36,9 @@ public class PeerRegistrator {
 
         Peer peer = event.getPeer();
         String peerPublicKey = outboundAdapter.handshake(event.getPeer());
-        peer.setPublicKey(peerPublicKey);
 
-        // Сохраняем в БД только после успешного получения ответа (без exception) от пира
+        // Сохраняем в БД только после успешного получения ответа от пира (если handshake() не выбросил exception)
+        peer.setPublicKey(peerPublicKey);
         storage.save(event.getPeer());
     }
 }

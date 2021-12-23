@@ -10,7 +10,7 @@ import org.springframework.messaging.Message;
  */
 @MessageEndpoint
 @Slf4j
-public class InboundAdapter {
+public class TcpInboundAdapter {
 
     @ServiceActivator(inputChannel = "input")
     public String receive(Message<String> request) {

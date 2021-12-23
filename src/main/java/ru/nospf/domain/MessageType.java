@@ -1,4 +1,4 @@
-package ru.nospf.adapter.tcp;
+package ru.nospf.domain;
 
 /**
  * todo Document type MessageType

@@ -14,7 +14,7 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageHandler;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.Payload;
-import ru.nospf.adapter.tcp.MessageType;
+import ru.nospf.domain.MessageType;
 
 @Configuration
 @RequiredArgsConstructor
