@@ -1,11 +1,10 @@
 package ru.nospf.adapter.dns;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import ru.nospf.app.PeerFoundEvent;
 import ru.nospf.app.PeerNameGenerator;
+import ru.nospf.app.PeerRegistrator;
 import ru.nospf.domain.Peer;
 import ru.nospf.fw.appconfig.ApplicationConfig;
 
@@ -20,14 +19,15 @@ import java.net.UnknownHostException;
 public class DnsPeerFinder {
 
     private final ApplicationConfig applicationConfig;
-    private final ApplicationEventPublisher applicationEventPublisher;
+    private final PeerRegistrator peerRegistrator;
 
     private Integer nodeBucket;
     private Integer port;
 
-    public DnsPeerFinder(ApplicationConfig applicationConfig, ApplicationEventPublisher applicationEventPublisher) {
+    public DnsPeerFinder(ApplicationConfig applicationConfig,
+                         PeerRegistrator peerRegistrator) {
         this.applicationConfig = applicationConfig;
-        this.applicationEventPublisher = applicationEventPublisher;
+        this.peerRegistrator = peerRegistrator;
 
         nodeBucket = 0;
         port = applicationConfig.getScanDnsParams().getFirstPort();
@@ -48,7 +48,7 @@ public class DnsPeerFinder {
         String ip = searchForPeerIp(fullDnsPeerName);
         if (ip != null) {
             Peer peer = Peer.builder().ip(ip).port(port).build();
-            applicationEventPublisher.publishEvent(new PeerFoundEvent(fullDnsPeerName, peer));
+            peerRegistrator.registerPeer(peer);
         }
 
         // Вычисляем значения nodeBucket и port для следующей проверки

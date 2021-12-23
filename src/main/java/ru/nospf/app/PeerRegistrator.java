@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import ru.nospf.app.api.Database;
+import ru.nospf.app.api.OutboundAdapter;
 import ru.nospf.domain.Peer;
 import ru.nospf.fw.appconfig.ApplicationConfig;
 
@@ -30,15 +32,13 @@ public class PeerRegistrator {
         log.info("Self DNS name: {}", selfNodeName);
     }
 
-    @EventListener
-    public void onPeerFoundEvent(PeerFoundEvent event) {
-        log.info("Peer found, trying to communicate: {}", event);
+    public void registerPeer(Peer peer) {
+        log.info("Peer found, trying to communicate: {}", peer);
 
-        Peer peer = event.getPeer();
-        String peerPublicKey = outboundAdapter.handshake(event.getPeer());
+        String peerPublicKey = outboundAdapter.handshake(peer);
 
         // Сохраняем в БД только после успешного получения ответа от пира (если handshake() не выбросил exception)
         peer.setPublicKey(peerPublicKey);
-        storage.save(event.getPeer());
+        storage.save(peer);
     }
 }

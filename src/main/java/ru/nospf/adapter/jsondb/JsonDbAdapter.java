@@ -3,7 +3,7 @@ package ru.nospf.adapter.jsondb;
 import io.jsondb.JsonDBTemplate;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
-import ru.nospf.app.Database;
+import ru.nospf.app.api.Database;
 import ru.nospf.domain.Peer;
 
 /**

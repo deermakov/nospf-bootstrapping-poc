@@ -1,4 +1,4 @@
-package ru.nospf.app;
+package ru.nospf.app.api;
 
 import ru.nospf.domain.Peer;
 
