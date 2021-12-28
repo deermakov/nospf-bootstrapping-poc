@@ -25,6 +25,6 @@ nospf-bootstrapping-poc:
     domains:
     - duckdns.org
     - mine.nu
-    first-port: 56780
+    first-port: 40000
     last-port: 65000
     last-node-bucket: 10000
